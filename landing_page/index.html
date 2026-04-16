@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Doctor — AI Crop Disease Detection for Indian Farmers</title>
+    <meta name="description"
+        content="Crop Doctor uses AI to diagnose plant diseases in under 2 seconds — fully offline, completely free. Built for Indian farmers." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --g-dark: #0a2e1d;
+            --g-deep: #145330;
+            --g-mid: #258c5c;
+            --g-light: #4ade80;
+            --g-pale: #dcffeb;
+            --g-muted: #f0fdf4;
+            --amber: #fbbf24;
+            --cream: #faf9f6;
+            --white: #ffffff;
+            --ink: #020617;
+            --ink-mid: #334155;
+            --ink-soft: #64748b;
+            --sh: rgba(6, 78, 59, .08);
+            --r-card: 24px;
+            --r-pill: 999px;
+            --tr: .35s cubic-bezier(.4, 0, .2, 1);
+            --glass-bg: rgba(255, 255, 255, .7);
+            --glass-border: rgba(255, 255, 255, .5);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: .018;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* UTIL */
+        .wrap {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        .label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            color: var(--g-light);
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .label.dk {
+            color: var(--g-mid);
+        }
+
+        /* NAV */
+        #nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all var(--tr);
+        }
+
+        #nav.scrolled {
+            height: 60px;
+            background: rgba(255, 255, 255, .85);
+            box-shadow: 0 4px 30px rgba(15, 61, 37, .05);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--g-light);
+            position: relative;
+        }
+
+        .nav-dot::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid var(--g-light);
+            animation: pulse-ring 2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(.7);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: .5;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        .wordmark {
+            font-family: 'Playfair Display', serif;
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--g-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 34px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--ink-mid);
+            transition: color var(--tr);
+        }
+
+        .nav-links a:hover {
+            color: var(--g-dark);
+        }
+
+        .btn-dl {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--g-deep);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: var(--r-pill);
+            box-shadow: 0 4px 20px rgba(10, 46, 29, .2);
+            transition: all var(--tr);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-dl::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+            transition: .5s;
+        }
+
+        .btn-dl:hover::before {
+            left: 100%;
+        }
+
+        .btn-dl:hover {
+            background: var(--g-dark);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(10, 46, 29, .3);
+        }
+
+        .btn-dl svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        /* HERO */
+        #hero {
+            min-height: 100svh;
+            padding: 120px 48px 90px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hblob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hblob-1 {
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(61, 176, 122, .12) 0%, transparent 70%);
+            right: -200px;
+            top: -100px;
+            animation: morph 20s ease-in-out infinite alternate;
+        }
+
+        .hblob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(232, 146, 14, .08) 0%, transparent 70%);
+            left: -100px;
+            bottom: -50px;
+            animation: morph 15s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes morph {
+            0% {
+                border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            100% {
+                border-radius: 60% 40% 40% 60% / 30% 60% 40% 70%;
+                transform: translate(50px, 100px) rotate(15deg);
+            }
+        }
+
+        .leaf-float {
+            position: absolute;
+            font-size: 24px;
+            opacity: .15;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(1px);
+        }
+
+        .lf-1 {
+            top: 15%;
+            left: 5%;
+            animation: float 12s linear infinite;
+        }
+
+        .lf-2 {
+            top: 65%;
+            right: 8%;
+            animation: float 18s linear infinite reverse;
+        }
+
+        .lf-3 {
+            top: 40%;
+            left: 45%;
+            animation: float 15s linear infinite 2s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, 50px) rotate(120deg);
+            }
+
+            66% {
+                transform: translate(-20px, 100px) rotate(240deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--g-pale);
+            border: 1px solid rgba(61, 176, 122, .35);
+            border-radius: var(--r-pill);
+            padding: 6px 16px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            color: var(--g-mid);
+            margin-bottom: 26px;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--g-light);
+            animation: pulse 2.4s ease-in-out infinite;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(44px, 5.5vw, 66px);
+            font-weight: 900;
+            line-height: 1.06;
+            color: var(--g-dark);
+            margin-bottom: 22px;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--g-light);
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--ink-mid);
+            line-height: 1.75;
+            max-width: 470px;
+            margin-bottom: 38px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--g-mid);
+            color: #fff;
+            font-size: 15.5px;
+            font-weight: 700;
+            padding: 16px 34px;
+            border-radius: var(--r-pill);
+            box-shadow: 0 10px 36px rgba(30, 107, 69, .38);
+            transition: background var(--tr), transform var(--tr), box-shadow var(--tr);
+        }
+
+        .btn-primary:hover {
+            background: var(--g-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 44px rgba(15, 61, 37, .45);
+        }
+
+        .btn-primary svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--ink-mid);
+            font-size: 15px;
+            font-weight: 600;
+            transition: color var(--tr), gap var(--tr);
+        }
+
+        .btn-ghost:hover {
+            color: var(--g-mid);
+            gap: 11px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 36px;
+            padding-top: 36px;
+            border-top: 1px solid rgba(61, 176, 122, .18);
+        }
+
+        .stat-n {
+            font-family: 'Playfair Display', serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--g-dark);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .stat-l {
+            font-size: 12.5px;
+            color: var(--ink-soft);
+            font-weight: 500;
+        }
+
+        /* PHONE */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .phone-shell {
+            width: 272px;
+            height: 556px;
+            background: #0d2b1a;
+            border-radius: 46px;
+            padding: 10px;
+            box-shadow: 0 40px 90px rgba(10, 30, 18, .55), 0 0 0 1px rgba(61, 176, 122, .12);
+            position: relative;
+            z-index: 1;
+        }
+
+        .phone-inner {
+            background: #f0faf4;
+            border-radius: 38px;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-bar {
+            height: 26px;
+            background: #0d2b1a;
+            border-radius: 38px 38px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phone-notch {
+            width: 70px;
+            height: 10px;
+            background: #000;
+            border-radius: 5px;
+        }
+
+        .phone-head {
+            background: #fff;
+            padding: 11px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(61, 176, 122, .1);
+        }
+
+        .phone-head .ico {
+            font-size: 17px;
+        }
+
+        .phone-head .ptitle {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--g-dark);
+        }
+
+        .phone-head .psub {
+            font-size: 9px;
+            color: var(--ink-soft);
+            margin-top: 1px;
+        }
+
+        .phone-scan {
+            height: 152px;
+            background: linear-gradient(160deg, #0d2b1a 0%, #1e6b45 60%, #3db07a 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .scan-overlay {
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' fill='rgba(255,255,255,.04)'/%3E%3C/svg%3E");
+        }
+
+        .scan-beam {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(61, 176, 122, .9), transparent);
+            animation: beam 2.2s ease-in-out infinite;
+        }
+
+        @keyframes beam {
+
+            0%,
+            100% {
+                top: 15%
+            }
+
+            50% {
+                top: 82%
+            }
+        }
+
+        .scan-corners {
+            position: absolute;
+            inset: 12px;
+            pointer-events: none;
+        }
+
+        .scan-corners::before,
+        .scan-corners::after,
+        .scan-corners span::before,
+        .scan-corners span::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-color: rgba(61, 176, 122, .8);
+            border-style: solid;
+        }
+
+        .scan-corners::before {
+            top: 0;
+            left: 0;
+            border-width: 2px 0 0 2px;
+            border-radius: 3px 0 0 0;
+        }
+
+        .scan-corners::after {
+            top: 0;
+            right: 0;
+            border-width: 2px 2px 0 0;
+            border-radius: 0 3px 0 0;
+        }
+
+        .scan-corners span {
+            position: absolute;
+            inset: 0;
+        }
+
+        .scan-corners span::before {
+            bottom: 0;
+            left: 0;
+            border-width: 0 0 2px 2px;
+            border-radius: 0 0 0 3px;
+        }
+
+        .scan-corners span::after {
+            bottom: 0;
+            right: 0;
+            border-width: 0 2px 2px 0;
+            border-radius: 0 0 3px 0;
+        }
+
+        .leaf-emoji {
+            font-size: 44px;
+            opacity: .65;
+            position: relative;
+            z-index: 1;
+        }
+
+        .phone-result {
+            margin: 9px 9px 0;
+            background: rgba(186, 26, 26, .06);
+            border-left: 3px solid #ba1a1a;
+            border-radius: 10px;
+            padding: 9px 11px;
+        }
+
+        .res-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .res-name {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #7a0000;
+        }
+
+        .res-badge {
+            font-size: 9px;
+            font-weight: 700;
+            background: #ffdad6;
+            color: #ba1a1a;
+            padding: 2px 7px;
+            border-radius: 20px;
+        }
+
+        .res-crop {
+            font-size: 10px;
+            color: var(--ink-soft);
+            margin-top: 2px;
+        }
+
+        .conf-wrap {
+            margin: 7px 9px;
+        }
+
+        .conf-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .conf-lbl {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--ink-mid);
+        }
+
+        .conf-pct {
+            font-size: 9.5px;
+            font-weight: 800;
+            color: var(--g-mid);
+        }
+
+        .conf-track {
+            height: 5px;
+            background: rgba(61, 176, 122, .15);
+            border-radius: 3px;
+        }
+
+        .conf-fill {
+            height: 5px;
+            background: linear-gradient(90deg, var(--g-mid), var(--g-light));
+            border-radius: 3px;
+            width: 0;
+            transition: width 1.6s cubic-bezier(.4, 0, .2, 1) .5s;
+        }
+
+        .phone-treat {
+            background: #fff;
+            margin: 7px 9px;
+            border-radius: 10px;
+            padding: 9px 11px;
+            box-shadow: 0 2px 8px rgba(15, 61, 37, .07);
+        }
+
+        .treat-head {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--g-dark);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .treat-line {
+            height: 5px;
+            background: var(--g-muted);
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+
+        .treat-line.s {
+            width: 60%;
+        }
+
+        .treat-line.m {
+            width: 80%;
+        }
+
+        .phone-fb {
+            display: flex;
+            gap: 5px;
+            padding: 8px 9px 6px;
+        }
+
+        .fb {
+            flex: 1;
+            font-size: 8.5px;
+            font-weight: 700;
+            text-align: center;
+            padding: 5px 3px;
+            border-radius: 7px;
+            cursor: default;
+        }
+
+        .fb-y {
+            background: var(--g-pale);
+            color: var(--g-dark);
+        }
+
+        .fb-n {
+            background: #ffdad6;
+            color: #7a0000;
+        }
+
+        .fb-u {
+            background: #fff8e8;
+            color: #7a4800;
+        }
+
+        .chip {
+            position: absolute;
+            background: #fff;
+            border-radius: 13px;
+            padding: 9px 13px;
+            box-shadow: 0 8px 28px rgba(15, 61, 37, .14);
+            font-size: 10.5px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .chip strong {
+            display: block;
+            font-weight: 700;
+            color: var(--g-dark);
+            font-size: 11px;
+        }
+
+        .chip span {
+            color: #999;
+            font-size: 9.5px;
+        }
+
+        .chip .cie {
+            font-size: 18px;
+        }
+
+        .chip-1 {
+            top: 50px;
+            right: -96px;
+            animation: cf 3.5s ease-in-out infinite;
+        }
+
+        .chip-2 {
+            bottom: 90px;
+            left: -96px;
+            animation: cf 3.5s ease-in-out infinite 1.75s;
+        }
+
+        @keyframes cf {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-9px)
+            }
+        }
+
+        /* TRUST BAR */
+        #trust {
+            background: var(--g-dark);
+            padding: 22px 0;
+            overflow: hidden;
+        }
+
+        .trust-inner {
+            display: flex;
+            animation: mq 22s linear infinite;
+            width: max-content;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 40px;
+            border-right: 1px solid rgba(255, 255, 255, .1);
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .6);
+            white-space: nowrap;
+        }
+
+        .trust-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--g-light);
+            flex-shrink: 0;
+        }
+
+        @keyframes mq {
+            0% {
+                transform: translateX(0)
+            }
+
+            100% {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* HOW IT WORKS */
+        #how {
+            background: var(--g-dark);
+            padding: 120px 48px;
+        }
+
+        .how-head {
+            margin-bottom: 64px;
+        }
+
+        .how-head h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 4vw, 52px);
+            color: #fff;
+            line-height: 1.15;
+            max-width: 540px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 52px;
+            left: calc(16.66% + 16px);
+            right: calc(16.66% + 16px);
+            height: 1px;
+            border-top: 1.5px dashed rgba(61, 176, 122, .22);
+        }
+
+        .step {
+            background: rgba(255, 255, 255, .035);
+            border: 1px solid rgba(61, 176, 122, .1);
+            border-radius: var(--r-card);
+            padding: 40px 30px;
+            transition: background var(--tr), border-color var(--tr), transform var(--tr);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, .065);
+            border-color: rgba(61, 176, 122, .28);
+            transform: translateY(-5px);
+        }
+
+        .step-n {
+            font-family: 'Playfair Display', serif;
+            font-size: 70px;
+            font-weight: 900;
+            color: rgba(61, 176, 122, .12);
+            line-height: 1;
+            margin-bottom: 18px;
+        }
+
+        .step-ico {
+            width: 50px;
+            height: 50px;
+            border-radius: 13px;
+            background: rgba(61, 176, 122, .1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+        .step-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 11px;
+        }
+
+        .step-body {
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, .5);
+            line-height: 1.75;
+        }
+
+        /* FEATURES */
+        #features {
+            padding: 120px 48px;
+            background: var(--cream);
+        }
+
+        .feat-header {
+            margin-bottom: 56px;
+        }
+
+        .feat-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(34px, 3.8vw, 50px);
+            color: var(--g-dark);
+            line-height: 1.15;
+            max-width: 520px;
+        }
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feat {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: var(--r-card);
+            padding: 48px 40px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .feat:hover {
+            transform: translateY(-15px) rotateX(4deg) rotateY(-2deg);
+            box-shadow: 0 40px 100px rgba(15, 61, 37, .15);
+            border-color: var(--g-light);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .feat-ico {
+            width: 64px;
+            height: 64px;
+            background: var(--g-pale);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 28px;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+            box-shadow: 0 8px 20px rgba(61, 176, 122, 0.15);
+        }
+
+        .feat:hover .feat-ico {
+            transform: translateZ(30px) scale(1.1) rotate(8deg);
+            background: var(--g-light);
+            color: white;
+        }
+
+        .feat-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--g-dark);
+            margin-bottom: 16px;
+            transition: transform 0.4s ease;
+        }
+
+        .feat:hover .feat-title {
+            transform: translateZ(20px);
+        }
+
+        .feat-body {
+            font-size: 15.5px;
+            line-height: 1.75;
+            color: var(--ink-mid);
+            margin-bottom: 28px;
+            flex-grow: 1;
+            transition: transform 0.4s ease;
+        }
+
+        .feat:hover .feat-body {
+            transform: translateZ(10px);
+        }
+
+        .feat-tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--g-mid);
+            background: var(--g-pale);
+            padding: 6px 16px;
+            border-radius: var(--r-pill);
+            align-self: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .feat:hover .feat-tag {
+            background: var(--g-mid);
+            color: white;
+            transform: translateZ(15px);
+        }
+
+        .feat.accent {
+            background: linear-gradient(135deg, var(--g-deep) 0%, var(--g-dark) 100%);
+            color: #fff;
+            border: none;
+        }
+
+        .feat.accent:hover {
+            background: linear-gradient(135deg, var(--g-mid) 0%, var(--g-deep) 100%);
+        }
+
+        .feat.accent .feat-title {
+            color: #fff;
+        }
+
+        .feat.accent .feat-body {
+            color: rgba(255, 255, 255, .8);
+        }
+
+        .feat.accent .feat-ico {
+            background: rgba(255, 255, 255, .15);
+            color: white;
+        }
+
+        .feat.accent .feat-tag {
+            background: rgba(255, 255, 255, .2);
+            color: #fff;
+        }
+
+        /* CROPS */
+        #crops {
+            background: var(--g-pale);
+            padding: 72px 48px;
+            text-align: center;
+        }
+
+        .crops-lbl {
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--ink-mid);
+            margin-bottom: 32px;
+        }
+
+        .crop-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .cpill {
+            background: #fff;
+            color: var(--g-dark);
+            border: 1px solid rgba(61, 176, 122, .28);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 20px;
+            border-radius: var(--r-pill);
+            transition: background var(--tr), color var(--tr), transform var(--tr), box-shadow var(--tr);
+            cursor: default;
+        }
+
+        .cpill:hover {
+            background: var(--g-mid);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(30, 107, 69, .22);
+        }
+
+        /* MISSION */
+        #mission {
+            padding: 120px 48px;
+            background: #fff;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .mis-img {
+            border-radius: 28px;
+            overflow: hidden;
+            height: 480px;
+            box-shadow: 0 32px 80px var(--sh);
+            position: relative;
+        }
+
+        .mis-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mis-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(200deg, transparent 60%, rgba(15, 61, 37, .35));
+        }
+
+        .mis-txt h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 3.4vw, 46px);
+            color: var(--g-dark);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .mis-txt p {
+            font-size: 16px;
+            color: var(--ink-mid);
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .check-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--g-dark);
+        }
+
+        .ck {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--g-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .ck svg {
+            width: 13px;
+            height: 13px;
+            color: var(--g-mid);
+        }
+
+        /* CTA */
+        #cta {
+            background: var(--g-dark);
+            padding: 130px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-radial {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(61, 176, 122, .09) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        #cta .label {
+            color: var(--g-light);
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(40px, 5vw, 66px);
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 22px;
+        }
+
+        .cta-sub {
+            font-size: 18px;
+            color: rgba(255, 255, 255, .58);
+            line-height: 1.75;
+            max-width: 480px;
+            margin: 0 auto 52px;
+        }
+
+        .cta-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .btn-cta-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--g-light);
+            color: var(--g-dark);
+            font-size: 16px;
+            font-weight: 800;
+            padding: 18px 42px;
+            border-radius: var(--r-pill);
+            box-shadow: 0 10px 36px rgba(61, 176, 122, .38);
+            transition: background var(--tr), transform var(--tr), box-shadow var(--tr);
+        }
+
+        .btn-cta-main:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 48px rgba(61, 176, 122, .5);
+        }
+
+        .btn-cta-main svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .btn-cta-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, .07);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 18px 32px;
+            border-radius: var(--r-pill);
+            border: 1px solid rgba(255, 255, 255, .14);
+            transition: background var(--tr);
+        }
+
+        .btn-cta-ghost:hover {
+            background: rgba(255, 255, 255, .13);
+        }
+
+        .cta-note {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .28);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #091510;
+            border-top: 1px solid rgba(255, 255, 255, .05);
+            padding: 44px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 21px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .fd {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--g-light);
+            animation: pulse 2.4s ease-in-out infinite;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, .35);
+            transition: color var(--tr);
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: var(--g-light);
+        }
+
+        .footer-copy {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .22);
+        }
+
+        /* REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .65s ease, transform .65s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MOBILE NAV */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 300;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--g-dark);
+            border-radius: 2px;
+            transition: .33s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 85%;
+            max-width: 320px;
+            background: var(--cream);
+            z-index: 250;
+            padding: 100px 32px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            box-shadow: -10px 0 40px rgba(15, 61, 37, .15);
+            transform: translateX(100%);
+            transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+
+        .mobile-nav .nav-links {
+            display: flex !important;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .mobile-nav .nav-links a {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--g-dark);
+        }
+
+        .mobile-nav .btn-dl {
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(14, 32, 24, .45);
+            backdrop-filter: blur(4px);
+            z-index: 240;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease;
+        }
+
+        .overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* FAQ */
+        #faq {
+            padding: 120px 48px;
+            background: #fff;
+        }
+
+        .faq-grid {
+            max-width: 680px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(61, 176, 122, .12);
+        }
+
+        .faq-trigger {
+            width: 100%;
+            padding: 24px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .faq-trigger span {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--g-dark);
+            transition: color var(--tr);
+        }
+
+        .faq-ico {
+            width: 22px;
+            height: 22px;
+            position: relative;
+            transition: transform .3s ease;
+        }
+
+        .faq-ico::before,
+        .faq-ico::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--g-light);
+        }
+
+        .faq-ico::before {
+            width: 14px;
+            height: 2px;
+        }
+
+        .faq-ico::after {
+            width: 2px;
+            height: 14px;
+            transition: transform .3s ease;
+        }
+
+        .faq-item.active .faq-ico {
+            transform: rotate(135deg);
+        }
+
+        .faq-item.active .faq-trigger span {
+            color: var(--g-light);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .faq-inner {
+            padding: 0 0 24px;
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--ink-mid);
+        }
+
+        /* BACK TO TOP */
+        .btt {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--g-mid);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(30, 107, 69, .25);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: all .35s ease;
+            z-index: 100;
+        }
+
+        .btt.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .btt:hover {
+            background: var(--g-dark);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(15, 61, 37, .35);
+        }
+
+        /* CTA GRID */
+        .cta-grid {
+            position: absolute;
+            inset: 0;
+            opacity: .045;
+            background-image: linear-gradient(var(--white) 1px, transparent 1px), linear-gradient(90deg, var(--white) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-content {
+            position: relative;
+            background: black;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-content video {
+            max-width: 90vw;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:960px) {
+
+            .wrap,
+            #hero,
+            #how,
+            #features,
+            #crops,
+            #cta,
+            footer,
+            #mission {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            #nav {
+                padding: 0 24px;
+            }
+
+            .nav-links,
+            .nav .btn-dl {
+                display: none !important;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .feat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #mission {
+                grid-template-columns: 1fr;
+                padding: 80px 24px;
+                gap: 40px;
+            }
+
+            .mis-img {
+                height: 300px;
+            }
+
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+        }
+
+        @media(max-width:600px) {
+            .feat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .cta-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- VIDEO MODAL -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-content">
+            <span class="close-btn" id="closeVideo">&times;</span>
+            <video id="demoVideo" controls playsinline>
+                <source src="AppDemo.mp4" type="video/mp4">
+                Your browser does not support video.
+            </video>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="#" class="nav-brand">
+            <div class="nav-dot"></div>
+            <span class="wordmark">Crop Doctor</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#crops">Crops</a></li>
+            <li><a href="#mission">About</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <a href="https://drive.google.com/uc?export=download&id=1rJhdI043xx-n7GXjpPNuom50Q4_wXPqO" class="btn-dl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 3v13m0 0-4-4m4 4 4-4M3 19h18" />
+            </svg>
+            Download APK
+        </a>
+    </nav>
+
+    <!-- MOBILE NAV -->
+    <div class="overlay" id="overlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="nav-links">
+            <li><a href="#how" class="m-link">How it works</a></li>
+            <li><a href="#features" class="m-link">Features</a></li>
+            <li><a href="#crops" class="m-link">Crops</a></li>
+            <li><a href="#mission" class="m-link">About</a></li>
+        </ul>
+        <a href="https://drive.google.com/uc?export=download&id=1rJhdI043xx-n7GXjpPNuom50Q4_wXPqO" class="btn-dl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 3v13m0 0-4-4m4 4 4-4M3 19h18" />
+            </svg>
+            Download APK
+        </a>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hblob hblob-1"></div>
+        <div class="hblob hblob-2"></div>
+        <div class="leaf-float lf-1">🍃</div>
+        <div class="leaf-float lf-2">🌿</div>
+        <div class="leaf-float lf-3">🍂</div>
+        <div class="hero-grid wrap">
+            <div class="reveal">
+                <div class="hero-badge">
+                    <div class="dot"></div> AI-Powered &nbsp;·&nbsp; Works Offline &nbsp;·&nbsp; 100% Free
+                </div>
+                <h1>Diagnose crop disease in <em>seconds</em></h1>
+                <p class="hero-sub">Point your phone at a leaf. Crop Doctor instantly identifies the disease and tells
+                    you exactly how to treat it — even without internet.</p>
+                <div class="hero-ctas">
+                    <a href="https://drive.google.com/uc?export=download&id=1rJhdI043xx-n7GXjpPNuom50Q4_wXPqO"
+                        class="btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 3v13m0 0-4-4m4 4 4-4M3 19h18" />
+                        </svg>
+                        Download APK — Free
+                    </a>
+                    <!-- <a href="#how" class="btn-ghost">See how it works →</a> -->
+                    <a href="#" class="btn-ghost play-demo-btn">▶ See how it works</a>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <div class="stat-n">98.8%</div>
+                        <div class="stat-l">Detection accuracy</div>
+                    </div>
+                    <div>
+                        <div class="stat-n">38</div>
+                        <div class="stat-l">Diseases detected</div>
+                    </div>
+                    <div>
+                        <div class="stat-n">14</div>
+                        <div class="stat-l">Crop types</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual reveal">
+                <div class="phone-shell">
+                    <div class="phone-inner">
+                        <div class="phone-bar">
+                            <div class="phone-notch"></div>
+                        </div>
+                        <div class="phone-head">
+                            <div class="ico">🌿</div>
+                            <div>
+                                <div class="ptitle">Crop Doctor</div>
+                                <div class="psub">AI Disease Scanner</div>
+                            </div>
+                        </div>
+                        <div class="phone-scan">
+                            <div class="scan-overlay"></div>
+                            <div class="scan-beam"></div>
+                            <div class="scan-corners"><span></span></div>
+                            <div class="leaf-emoji">🍃</div>
+                        </div>
+                        <div class="phone-result">
+                            <div class="res-head">
+                                <div class="res-name">Early Blight</div>
+                                <div class="res-badge">DETECTED</div>
+                            </div>
+                            <div class="res-crop">Solanum lycopersicum · Tomato</div>
+                        </div>
+                        <div class="conf-wrap">
+                            <div class="conf-row">
+                                <div class="conf-lbl">CONFIDENCE SCORE</div>
+                                <div class="conf-pct">98%</div>
+                            </div>
+                            <div class="conf-track">
+                                <div class="conf-fill" id="confBar"></div>
+                            </div>
+                        </div>
+                        <div class="phone-treat">
+                            <div class="treat-head">💊 Treatment Plan</div>
+                            <div class="treat-line"></div>
+                            <div class="treat-line m"></div>
+                            <div class="treat-line s"></div>
+                        </div>
+                        <div class="phone-fb">
+                            <div class="fb fb-y">✓ Correct</div>
+                            <div class="fb fb-n">✗ Wrong</div>
+                            <div class="fb fb-u">? Unsure</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chip chip-1">
+                    <div class="cie">📶</div>
+                    <div><strong>Works offline</strong><span>No internet needed</span></div>
+                </div>
+                <div class="chip chip-2">
+                    <div class="cie">⚡</div>
+                    <div><strong>Instant results</strong><span>Under 2 seconds</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <div id="trust">
+        <div class="trust-inner" id="ti">
+            <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>100% Offline — No data charges</div>
+            <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                </svg>Results in under 2 seconds</div>
+            <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                </svg>Trained on 100,000+ leaf images</div>
+            <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>Android 6.0+ Compatible</div>
+            <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>Free forever — No subscriptions</div>
+            <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>Validated by agronomists</div>
+        </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section id="how">
+        <div class="wrap">
+            <div class="how-head reveal">
+                <span class="label">How it works</span>
+                <h2>Three steps from photo to treatment</h2>
+            </div>
+            <div class="steps">
+                <div class="step reveal">
+                    <div class="step-n">01</div>
+                    <div class="step-ico">📷</div>
+                    <div class="step-title">Take a photo</div>
+                    <p class="step-body">Open the app and photograph the affected leaf or plant part. Use natural light
+                        for best results — any angle works.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-n">02</div>
+                    <div class="step-ico">✨</div>
+                    <div class="step-title">AI analyses it</div>
+                    <p class="step-body">Our on-device model, trained on 100,000+ leaf images, identifies the disease in
+                        under 2 seconds — fully on your phone, no upload needed.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-n">03</div>
+                    <div class="step-ico">✅</div>
+                    <div class="step-title">Get treatment</div>
+                    <p class="step-body">Receive the disease name, a confidence score, and step-by-step treatment
+                        instructions in plain language — ready to act immediately.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="wrap">
+            <div class="feat-header reveal">
+                <span class="label dk">Why Crop Doctor</span>
+                <h2>Built for Indian farmers,<br>not laboratories</h2>
+            </div>
+            <div class="feat-grid">
+                <div class="feat reveal">
+                    <div class="feat-ico">📵</div>
+                    <div class="feat-title">100% offline</div>
+                    <p class="feat-body">Works deep inside your farm with zero signal. AI inference runs entirely
+                        on-device. No data charges, ever.</p>
+                    <span class="feat-tag">No internet needed</span>
+                </div>
+                <div class="feat accent reveal">
+                    <div class="feat-ico">⚡</div>
+                    <div class="feat-title">Instant diagnosis</div>
+                    <p class="feat-body">Results in under 2 seconds. No uploading, no waiting. Point the camera, tap,
+                        and treat.</p>
+                    <span class="feat-tag">Under 2 seconds</span>
+                </div>
+                <div class="feat reveal">
+                    <div class="feat-ico amb">🎯</div>
+                    <div class="feat-title">98.8% accurate</div>
+                    <p class="feat-body">Trained on 100,000+ real field leaf images and continuously improved from user
+                        feedback in the field.</p>
+                    <span class="feat-tag amb">Research grade</span>
+                </div>
+                <div class="feat reveal">
+                    <div class="feat-ico">💊</div>
+                    <div class="feat-title">Treatment included</div>
+                    <p class="feat-body">Every diagnosis comes with specific, actionable advice — which fungicide to
+                        use, dosage, and what to avoid.</p>
+                    <span class="feat-tag">38 diseases covered</span>
+                </div>
+                <div class="feat reveal">
+                    <div class="feat-ico amb">📱</div>
+                    <div class="feat-title">Lightweight app</div>
+                    <p class="feat-body">Highly optimized. Designed for budget Android handsets. Compatible with Android
+                        6.0
+                        and above.</p>
+                    <span class="feat-tag amb">Fast & Lean</span>
+                </div>
+                <div class="feat reveal">
+                    <div class="feat-ico">💚</div>
+                    <div class="feat-title">Completely free</div>
+                    <p class="feat-body">No subscriptions. No ads. No in-app purchases. Free forever — because every
+                        farmer deserves good tools.</p>
+                    <span class="feat-tag">Always free</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CROPS -->
+    <section id="crops">
+        <div class="crops-lbl">Detects diseases across 14 crops</div>
+        <div class="crop-pills">
+            <div class="cpill">🍅 Tomato</div>
+            <div class="cpill">🥔 Potato</div>
+            <div class="cpill">🌽 Corn / Maize</div>
+            <div class="cpill">🍎 Apple</div>
+            <div class="cpill">🍇 Grape</div>
+            <div class="cpill">🍑 Peach</div>
+            <div class="cpill">🫑 Bell Pepper</div>
+            <div class="cpill">🍓 Strawberry</div>
+            <div class="cpill">🍊 Orange</div>
+            <div class="cpill">🍒 Cherry</div>
+            <div class="cpill">🫐 Blueberry</div>
+            <div class="cpill">🍓 Raspberry</div>
+            <div class="cpill">🫘 Soybean</div>
+            <div class="cpill">🥒 Squash</div>
+        </div>
+    </section>
+
+    <!-- MISSION -->
+    <section id="mission">
+        <div class="mis-img reveal">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgXA-ksYJxPtn5Knwf1oVoyQ9YOwJRrVA7rcrvo5SWp6BZW3yaEyvkScDVkAag-KivvAFD2l8F0HWx7S6sFw1jOXXKotwcJOqlXZkluKfLWWJuEKXondhC6H3hcNHD6ZIl6zwSucp-LXoyDuPM9V_FNhni-bVH3-8BMWfURkdvIsHMDd4i0Fuzchsb1fpBQ5y0qn_pkECv6G0hiO6govFlx1NoC8bIEcEmcPKElqedJQAXaLb51_CJ7FgvZo9mc8sNZvx4wF5CdM4G"
+                alt="Indian farmer in field" />
+        </div>
+        <div class="mis-txt reveal">
+            <span class="label dk">Our Mission</span>
+            <h2>Bridging the gap between technology and the field</h2>
+            <p>Crop Doctor was built with a single purpose: to protect the livelihoods of farmers. We combine
+                cutting-edge deep learning with agricultural expertise to deliver a tool that is as practical in a
+                remote village as it is technically advanced.</p>
+            <ul class="check-list">
+                <li>
+                    <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg></div>Validated by agronomists across Indian crop regions
+                </li>
+                <li>
+                    <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg></div>Privacy-first — no images ever leave your device
+                </li>
+                <li>
+                    <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg></div>Model improves continuously via anonymous feedback
+                </li>
+                <li>
+                    <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg></div>Built on MobileNetV2 + TensorFlow Lite for edge inference
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="wrap reveal">
+            <div style="text-align:center; margin-bottom: 60px;">
+                <span class="label">Questions</span>
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item active">
+                    <button class="faq-trigger">
+                        <span>Does it really work without any internet?</span>
+                        <div class="faq-ico"></div>
+                    </button>
+                    <div class="faq-content" style="max-height: 200px;">
+                        <div class="faq-inner">
+                            Yes, the AI detection is 100% on-device. No data leaves your farm. However, <strong>sending
+                                feedback/corrections</strong> or checking for software updates does require a wifi or
+                            mobile data connection.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        <span>Is my phone compatible?</span>
+                        <div class="faq-ico"></div>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Crop Doctor is designed for peak efficiency on budget Android devices. It works on any
+                            handset running Android 6.0 (Marshmallow) or higher.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        <span>How accurate is the detection?</span>
+                        <div class="faq-ico"></div>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            The app has a validated 98.8% accuracy rate on established leaf datasets. Accuracy is
+                            highest when leaves are photographed in natural daylight without heavy shadows.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        <span>Are there any hidden costs?</span>
+                        <div class="faq-ico"></div>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            None. No ads, no subscriptions, and no in-app purchases. Our mission is to provide
+                            agricultural tools to everyone for free.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        <span>What crops can I diagnose?</span>
+                        <div class="faq-ico"></div>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            We currently support 14 major crops (Tomato, Potato, Corn, Apple, Grape, Peach, etc.)
+                            covering 38 different diseases and healthy states.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta">
+        <div class="cta-grid"></div>
+        <div class="cta-radial"></div>
+        <div style="position:relative;z-index:1">
+            <span class="label reveal">Free Download</span>
+            <h2 class="cta-title reveal">Protect your crops<br>starting today</h2>
+            <p class="cta-sub reveal">Download Crop Doctor free on Android. No account, no sign-up, no internet required
+                to use.</p>
+            <div class="cta-btns reveal">
+                <a href="https://drive.google.com/uc?export=download&id=1rJhdI043xx-n7GXjpPNuom50Q4_wXPqO"
+                    class="btn-cta-main">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 3v13m0 0-4-4m4 4 4-4M3 19h18" />
+                    </svg>
+                    Download APK — Android
+                </a>
+                <!-- <a href="#how" class="btn-cta-ghost">▶ &nbsp;See how it works</a> -->
+                <a href="#" class="btn-ghost play-demo-btn">▶ See how it works</a>
+            </div>
+            <p class="cta-note reveal">Free forever &nbsp;·&nbsp; Android 6.0+ &nbsp;·&nbsp; No
+                account needed</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-brand">
+            <div class="fd"></div> Crop Doctor
+        </div>
+        <div class="footer-links">
+            <a href="#how">How it works</a>
+            <a href="#features">Features</a>
+            <a href="#crops">Crops</a>
+            <a href="#mission">About</a>
+            <a href="https://drive.google.com/uc?export=download&id=1rJhdI043xx-n7GXjpPNuom50Q4_wXPqO">Download</a>
+        </div>
+        <div class="footer-copy">© 2026 Crop Doctor. Made for Indian farmers.</div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <div class="btt" id="backToTop" title="Back to Top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:20px;height:20px;">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </div>
+
+    <script>
+        // Nav shadow on scroll
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+
+        // Mobile Nav Toggle
+        const navToggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.getElementById('overlay');
+        const mLinks = document.querySelectorAll('.m-link');
+
+        const toggleMenu = () => {
+            navToggle.classList.toggle('active');
+            mobileNav.classList.toggle('open');
+            overlay.classList.toggle('visible');
+            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+        };
+
+        if (navToggle) {
+            navToggle.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+            mLinks.forEach(link => link.addEventListener('click', toggleMenu));
+        }
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const trigger = item.querySelector('.faq-trigger');
+            trigger.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('.faq-content').style.maxHeight = '0';
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                    const content = item.querySelector('.faq-content');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Back to Top
+        const btt = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            btt.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Scroll reveal
+        const revEls = document.querySelectorAll('.reveal');
+        const ro = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const sibs = [...e.target.parentElement.querySelectorAll('.reveal')];
+                const idx = sibs.indexOf(e.target);
+                setTimeout(() => e.target.classList.add('visible'), idx * 85);
+                ro.unobserve(e.target);
+            });
+        }, { threshold: 0.1 });
+        revEls.forEach(el => ro.observe(el));
+
+        // Confidence bar animate
+        const bar = document.getElementById('confBar');
+        const bo = new IntersectionObserver(e => {
+            if (e[0].isIntersecting) { bar.style.width = '98%'; bo.disconnect(); }
+        }, { threshold: 0.5 });
+        bo.observe(bar);
+
+        // Trust bar duplicate for seamless loop
+        const ti = document.getElementById('ti');
+        ti.innerHTML += ti.innerHTML;
+
+        // Active nav link highlight
+        const snList = document.querySelectorAll('section[id]');
+        const lnks = document.querySelectorAll('.nav-links a');
+        new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    lnks.forEach(l => l.style.color = '');
+                    const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+                    if (a) a.style.color = 'var(--g-mid)';
+                }
+            });
+        }, { rootMargin: '-40% 0px -55% 0px' }).observe(...snList);
+
+        const playBtns = document.querySelectorAll('.play-demo-btn');
+        const modal = document.getElementById('videoModal');
+        const closeBtn = document.getElementById('closeVideo');
+        const video = document.getElementById('demoVideo');
+
+        playBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                video.play();
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            video.pause();
+            video.currentTime = 0;
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                video.pause();
+                video.currentTime = 0;
+            }
+        });
+    </script>
+</body>
+
+</html>

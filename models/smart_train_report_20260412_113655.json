@@ -1,0 +1,10 @@
+{
+  "train_date": "2026-04-14T09:23:33.122053",
+  "strategy": "smart_mixed_weighted",
+  "val_accuracy": 0.9413,
+  "tflite_size_mb": 9.77,
+  "lr_phase_a": 5e-05,
+  "lr_phase_b": 1e-05,
+  "epochs_a": 8,
+  "epochs_b": 20
+}

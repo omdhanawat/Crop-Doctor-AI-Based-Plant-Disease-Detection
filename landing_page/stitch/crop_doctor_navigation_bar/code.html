@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Crop Doctor - The Modern Agrarian</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#426651",
+              "primary-fixed": "#b1f0ce",
+              "primary-fixed-dim": "#95d4b3",
+              "outline-variant": "#bfc9c1",
+              "on-background": "#1b1c19",
+              "surface-tint": "#2c694e",
+              "on-secondary-fixed": "#002112",
+              "inverse-on-surface": "#f2f1eb",
+              "background": "#fbf9f3",
+              "tertiary": "#683d00",
+              "on-secondary": "#ffffff",
+              "outline": "#707973",
+              "on-primary-container": "#a8e7c5",
+              "error-container": "#ffdad6",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#2b4e3b",
+              "inverse-surface": "#30312d",
+              "on-tertiary-fixed-variant": "#683d00",
+              "on-secondary-container": "#486c57",
+              "surface-variant": "#e4e2dd",
+              "primary-container": "#2d6a4f",
+              "on-primary-fixed-variant": "#0e5138",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "tertiary-container": "#895200",
+              "on-tertiary-container": "#ffd1a2",
+              "surface": "#fbf9f3",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#404943",
+              "secondary-fixed": "#c4ecd2",
+              "surface-container-high": "#eae8e2",
+              "inverse-primary": "#95d4b3",
+              "secondary-fixed-dim": "#a9d0b6",
+              "surface-container-low": "#f5f3ee",
+              "surface-container-highest": "#e4e2dd",
+              "surface-bright": "#fbf9f3",
+              "tertiary-fixed": "#ffdcbc",
+              "on-tertiary-fixed": "#2c1700",
+              "secondary-container": "#c4ecd2",
+              "surface-dim": "#dcdad4",
+              "surface-container": "#f0eee8",
+              "primary": "#0f5238",
+              "on-surface": "#1b1c19"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes pulse-glow {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(82, 183, 136, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(82, 183, 136, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(82, 183, 136, 0); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-12 h-[64px] bg-[#faf8f2]/92 dark:bg-zinc-950/92 backdrop-blur-md border-b border-[#52b788]/15">
+<!-- Left Section: Brand -->
+<div class="flex items-center gap-[10px] text-[22px] font-bold font-headline text-[#1a3d2b] dark:text-[#fbf9f3]">
+<div class="w-2 h-2 rounded-full bg-[#52b788] animate-pulse-glow"></div>
+<span>Crop Doctor</span>
+</div>
+<!-- Center Section: Navigation Links (Desktop) -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#0f5238] dark:text-[#52b788] font-semibold border-b-2 border-[#0f5238] pb-1 font-body text-sm" href="#">How it works</a>
+<a class="text-[#3d5a47] dark:text-zinc-400 hover:text-[#0f5238] transition-colors font-body text-sm font-medium" href="#">Features</a>
+<a class="text-[#3d5a47] dark:text-zinc-400 hover:text-[#0f5238] transition-colors font-body text-sm font-medium" href="#">Crops</a>
+<a class="text-[#3d5a47] dark:text-zinc-400 hover:text-[#0f5238] transition-colors font-body text-sm font-medium" href="#">Team</a>
+</div>
+<!-- Right Section: Primary Action -->
+<div class="flex items-center gap-4">
+<button class="bg-[#2d6a4f] text-white px-[22px] py-[10px] rounded-full text-sm font-semibold transition-all duration-300 hover:bg-[#1a3d2b] active:scale-95">
+                Download Free
+            </button>
+<!-- Mobile Menu Toggle (Semantic Shell Logic) -->
+<button class="md:hidden p-2 text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-[64px]">
+<!-- Hero Section: The Editorial Visual -->
+<section class="relative h-[870px] flex items-center px-12 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Sustainable agriculture" class="w-full h-full object-cover" data-alt="Cinematic wide shot of terraced rice fields in early morning mist with golden sunlight filtering through rolling green hills" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBffSxVgp9FlFRtUorCwkN-9SktkiBsCyCR2NSqGzqQHoMLb7sQkcQ7Cgy6JE2dQ0ajeabsOQuconho7Z8BSp7JTHUZVVgJp2JvzdQs1q7TpJR0HP3jyAjvgkL6Ixt87UCJJJ9dtA_a4SrCkFPvnjcBFjolSIE5E1fXyQEw81kB_TV3uwhnbrkq5gzO_rxlg3x3uy2HGc5QTOjUbhsqpUws-KXnxGmGjzcHF-HIoP6TQEy3n2hEbEU5H-SSqolw8X_EPvfDEtjZu-UH"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/60 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-2xl">
+<span class="inline-block px-4 py-1.5 bg-primary-container text-white rounded-full text-xs font-bold tracking-widest uppercase mb-6">Sustainable Growth</span>
+<h1 class="text-6xl md:text-8xl font-headline font-bold text-primary leading-[1.1] mb-8">
+                    Modern Care for <br/><span class="italic font-normal">Ancestral Soil</span>
+</h1>
+<p class="text-lg text-secondary font-medium leading-relaxed mb-10 max-w-lg">
+                    Crop Doctor blends precision technology with deep agricultural wisdom to help you cultivate resilience in every acre.
+                </p>
+<div class="flex items-center gap-6">
+<button class="h-14 px-8 bg-primary text-on-primary rounded-full font-bold flex items-center gap-3 transition-transform hover:scale-105 active:scale-95">
+                        Start Diagnosing
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="h-14 px-8 border border-primary/20 text-primary rounded-full font-bold hover:bg-primary-fixed/30 transition-colors">
+                        View Demo
+                    </button>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Features & Data -->
+<section class="py-24 px-12 bg-surface-container-low">
+<div class="grid grid-cols-12 gap-6">
+<!-- Large Featured Bento -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest p-12 rounded-lg flex flex-col justify-between min-h-[500px]">
+<div>
+<span class="text-tertiary font-bold tracking-tighter text-5xl mb-4 block">01</span>
+<h2 class="text-4xl font-headline font-bold text-on-surface mb-6">Real-time Soil Vitality Monitoring</h2>
+<p class="text-on-surface-variant max-w-md leading-relaxed">Our advanced sensor network provides minute-by-minute updates on moisture, pH, and nutrient levels across your entire estate.</p>
+</div>
+<div class="mt-12 h-64 bg-surface-container rounded-xl flex items-end p-6 gap-3 overflow-hidden">
+<div class="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40" style="height: 60%"></div>
+<div class="flex-1 bg-primary/30 rounded-t-lg transition-all hover:bg-primary/50" style="height: 85%"></div>
+<div class="flex-1 bg-primary/40 rounded-t-lg transition-all hover:bg-primary/60" style="height: 45%"></div>
+<div class="flex-1 bg-primary/50 rounded-t-lg transition-all hover:bg-primary/70" style="height: 100%"></div>
+<div class="flex-1 bg-primary/30 rounded-t-lg transition-all hover:bg-primary/50" style="height: 70%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg transition-all hover:bg-primary/40" style="height: 55%"></div>
+</div>
+</div>
+<!-- Secondary Bento -->
+<div class="col-span-12 lg:col-span-5 grid grid-rows-2 gap-6">
+<div class="bg-primary text-on-primary p-10 rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">psychology</span>
+<span class="bg-on-primary/10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">AI Insight</span>
+</div>
+<h3 class="text-3xl font-headline font-semibold">Predictive Pest Defense</h3>
+</div>
+<div class="bg-tertiary text-on-tertiary p-10 rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-4xl">cloud_sync</span>
+<span class="bg-on-tertiary/10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Global Data</span>
+</div>
+<h3 class="text-3xl font-headline font-semibold">Micro-Climate Integration</h3>
+</div>
+</div>
+<!-- Triple Columns (No borders, just space and color) -->
+<div class="col-span-12 md:col-span-4 p-8 bg-surface-container-high rounded-lg group transition-all hover:bg-surface-container-highest">
+<div class="w-12 h-12 rounded-full bg-primary-fixed mb-6 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">potted_plant</span>
+</div>
+<h4 class="text-xl font-bold mb-4 font-headline">Specific Crop Profiling</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Detailed analysis tailored to over 150 unique crop varieties indigenous to the Indian subcontinent.</p>
+</div>
+<div class="col-span-12 md:col-span-4 p-8 bg-surface-container-high rounded-lg group transition-all hover:bg-surface-container-highest">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed mb-6 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<h4 class="text-xl font-bold mb-4 font-headline">Smart Irrigation Logs</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Save up to 40% more water with automated scheduling based on real-time soil suction pressure.</p>
+</div>
+<div class="col-span-12 md:col-span-4 p-8 bg-surface-container-high rounded-lg group transition-all hover:bg-surface-container-highest">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed mb-6 flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">currency_rupee</span>
+</div>
+<h4 class="text-xl font-bold mb-4 font-headline">Market Yield Analysis</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Connect directly with regional mandis to track price fluctuations before you even harvest.</p>
+</div>
+</div>
+</section>
+<!-- Featured Crops: Editorial List -->
+<section class="py-24 px-12 bg-surface">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div class="max-w-xl">
+<h2 class="text-5xl font-headline font-bold text-primary mb-6">The Modern Harvest</h2>
+<p class="text-secondary">Explore the detailed scientific and traditional profiles of our most monitored regional crops.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-2 border-b-2 border-primary/20 pb-1 hover:border-primary transition-all" href="#">
+                    Explore all 150+ Crops
+                    <span class="material-symbols-outlined">arrow_outward</span>
+</a>
+</div>
+<div class="space-y-12">
+<!-- Crop Item 01 -->
+<div class="flex flex-col lg:flex-row items-center gap-12 group">
+<div class="w-full lg:w-1/2 aspect-[16/9] rounded-lg overflow-hidden">
+<img alt="Basmati Rice" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Golden ripe basmati rice fields ready for harvest swaying in the wind under a clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnC4ZbzRsjBIg408TmNIjx2A4tJpC_Z3S-apJCTP3tVxGoxrmdazeha46GuQcIiFr4Z77HTOGQvTfbTr_9_l1-ONohxzJl81Ih7SMIzInlpVpeosYPL8EYMuCM1ErdHErM3OmDnVwGfn13Xi3Er-LWiQC6SgI_Gw8D8BHVdFCW6m2YSIJuPTXSPmdfv789EaA3eFZxMQHXSRND-4GPubbLRuW4djkZoN5Q_WGwiWdimP2rnUqsbhrYqzyCcmuWyBK6vQVUYLNHyaSi"/>
+</div>
+<div class="w-full lg:w-1/2">
+<span class="text-sm font-bold text-primary-fixed-dim uppercase tracking-[0.2em] mb-4 block">Regional Staple</span>
+<h3 class="text-4xl font-headline font-bold mb-6 group-hover:text-primary transition-colors">Premium Basmati Rice</h3>
+<p class="text-on-surface-variant leading-loose mb-8">Requiring precise moisture calibration and specific temperature ranges during the grain-filling stage. Crop Doctor provides 24/7 humidity tracking to ensure optimal aroma development.</p>
+<div class="flex gap-8">
+<div>
+<span class="block text-xs uppercase font-bold text-outline mb-1">Optimal pH</span>
+<span class="text-xl font-headline font-semibold">6.0 - 7.0</span>
+</div>
+<div>
+<span class="block text-xs uppercase font-bold text-outline mb-1">Water Need</span>
+<span class="text-xl font-headline font-semibold">High</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Crop Item 02 -->
+<div class="flex flex-col lg:flex-row-reverse items-center gap-12 group">
+<div class="w-full lg:w-1/2 aspect-[16/9] rounded-lg overflow-hidden">
+<img alt="Turmeric Roots" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close up of vibrant orange turmeric fingers freshly harvested from the earth with soil particles still attached" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7xOTue3Ik6a-LytAHLLOXAF8d8li-LNHpxEpF5bObhZ_5dS8r_yljakTXoANeW_8_2kIuyUKrdIFO21dG0nTk9o7VzdH3HCYSjMBvM5AHv0VWae1iPeusxBN6_kUGvh1mpqpD1FjFvtfS7JGGRTiVsLC-KudBVmc-fh1kU0j0Cxo4bChU5an1ClfIKMdMQ6BLXlgeVjy45_pWA6lczk7WrvB5sbZLQv0LsKgOn1Zu7A-N8XuRo8INuaNIMR_Jzv9rAu8o4OmuNb2c"/>
+</div>
+<div class="w-full lg:w-1/2">
+<span class="text-sm font-bold text-tertiary uppercase tracking-[0.2em] mb-4 block">Medicinal Gold</span>
+<h3 class="text-4xl font-headline font-bold mb-6 group-hover:text-tertiary transition-colors">Alleppey Turmeric</h3>
+<p class="text-on-surface-variant leading-loose mb-8">Known for high curcumin content. Our system monitors the subterranean rhizome development through non-invasive soil capacitance mapping.</p>
+<div class="flex gap-8">
+<div>
+<span class="block text-xs uppercase font-bold text-outline mb-1">Optimal pH</span>
+<span class="text-xl font-headline font-semibold">5.5 - 6.5</span>
+</div>
+<div>
+<span class="block text-xs uppercase font-bold text-outline mb-1">Curation Time</span>
+<span class="text-xl font-headline font-semibold">9 Months</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer / CTA -->
+<section class="py-24 px-12 bg-primary-container text-on-primary-container">
+<div class="flex flex-col md:flex-row justify-between items-center gap-12">
+<div class="max-w-2xl text-center md:text-left">
+<h2 class="text-5xl md:text-6xl font-headline font-bold text-white mb-8">Ready to transform your land?</h2>
+<p class="text-xl opacity-80 leading-relaxed mb-8">Join over 15,000 farmers who have increased their yield by an average of 22% using Crop Doctor's modern agrarian toolkit.</p>
+<div class="flex flex-wrap justify-center md:justify-start gap-4">
+<button class="bg-white text-primary px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">download</span>
+                            App Store
+                        </button>
+<button class="bg-white text-primary px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">play_store_installed</span>
+                            Google Play
+                        </button>
+</div>
+</div>
+<div class="w-64 h-64 bg-primary-fixed/20 rounded-full flex items-center justify-center backdrop-blur-3xl animate-pulse">
+<span class="material-symbols-outlined text-9xl text-white/50" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</div>
+<div class="mt-24 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm opacity-60">
+<div class="font-headline text-lg font-bold">Crop Doctor</div>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">Privacy</a>
+<a class="hover:text-white transition-colors" href="#">Terms</a>
+<a class="hover:text-white transition-colors" href="#">Sitemap</a>
+</div>
+<div>© 2024 Agrarian Technologies. All rights reserved.</div>
+</div>
+</section>
+</main>
+</body></html>

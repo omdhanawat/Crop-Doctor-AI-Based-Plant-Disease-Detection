@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#b1f0ce",
+              "on-tertiary-container": "#ffd1a2",
+              "on-error-container": "#93000a",
+              "tertiary": "#683d00",
+              "surface": "#fbf9f3",
+              "surface-bright": "#fbf9f3",
+              "outline": "#707973",
+              "primary": "#0f5238",
+              "on-background": "#1b1c19",
+              "tertiary-container": "#895200",
+              "surface-tint": "#2c694e",
+              "on-secondary-fixed-variant": "#2b4e3b",
+              "outline-variant": "#bfc9c1",
+              "tertiary-fixed": "#ffdcbc",
+              "secondary-fixed-dim": "#a9d0b6",
+              "primary-fixed-dim": "#95d4b3",
+              "on-secondary-container": "#486c57",
+              "surface-container-high": "#eae8e2",
+              "on-error": "#ffffff",
+              "surface-variant": "#e4e2dd",
+              "surface-container-lowest": "#ffffff",
+              "on-surface-variant": "#404943",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#a8e7c5",
+              "on-primary-fixed": "#002114",
+              "surface-container-highest": "#e4e2dd",
+              "on-tertiary-fixed-variant": "#683d00",
+              "secondary": "#426651",
+              "background": "#fbf9f3",
+              "on-tertiary-fixed": "#2c1700",
+              "inverse-surface": "#30312d",
+              "secondary-fixed": "#c4ecd2",
+              "surface-container-low": "#f5f3ee",
+              "on-secondary-fixed": "#002112",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#1b1c19",
+              "on-primary-fixed-variant": "#0e5138",
+              "tertiary-fixed-dim": "#ffb86a",
+              "on-secondary": "#ffffff",
+              "surface-container": "#f0eee8",
+              "inverse-on-surface": "#f2f1eb",
+              "primary-container": "#2d6a4f",
+              "error": "#ba1a1a",
+              "surface-dim": "#dcdad4",
+              "error-container": "#ffdad6",
+              "secondary-container": "#c4ecd2",
+              "inverse-primary": "#95d4b3"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .editorial-shadow {
+        box-shadow: 0 20px 40px -4px rgba(15, 82, 56, 0.08);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation Bar -->
+<nav class="w-full sticky top-0 z-50 bg-[#fbf9f3] dark:bg-slate-950">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 py-4">
+<div class="text-2xl font-black text-[#0f5238] dark:text-[#4ade80] tracking-tight font-headline">
+                Crop Doctor
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#0f5238] dark:text-[#4ade80] border-b-2 border-[#0f5238] pb-1 font-headline font-bold text-lg" href="#">Detect</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-[#0f5238] font-headline font-bold text-lg transition-colors duration-200" href="#">Crops</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-[#0f5238] font-headline font-bold text-lg transition-colors duration-200" href="#">Advisory</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-[#0f5238] font-headline font-bold text-lg transition-colors duration-200" href="#">Community</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold scale-95 active:opacity-80 transition-transform hover:bg-primary-container">
+                Get Started
+            </button>
+</div>
+</nav>
+<main>
+<!-- Hero Context (Brief) -->
+<section class="py-20 px-8 text-center max-w-4xl mx-auto">
+<h1 class="font-headline text-5xl md:text-7xl font-bold text-primary mb-6 leading-tight">Precision Diagnostics for the Modern Farm.</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-2xl mx-auto font-body">Leveraging advanced vision AI to protect your yields and preserve agricultural heritage across the globe.</p>
+</section>
+<!-- CROPS SECTION (Requested) -->
+<section class="w-full py-[60px] bg-[#d8f3dc] flex flex-col items-center justify-center">
+<div class="max-w-7xl mx-auto px-8 w-full flex flex-col items-center">
+<!-- Top Label -->
+<span class="font-['DM_Sans'] text-[13px] font-semibold text-[#3d5a47] uppercase tracking-[0.08em] mb-[28px]">
+                    DETECTS DISEASES IN 14 CROPS
+                </span>
+<!-- Crop Pills Container -->
+<div class="flex flex-wrap justify-center gap-3 max-w-[800px]">
+<!-- Individual Pills -->
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🍅</span> Tomato
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🥔</span> Potato
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🌽</span> Corn / Maize
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🍎</span> Apple
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🍇</span> Grape
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🍑</span> Peach
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🫑</span> Bell Pepper
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🍓</span> Strawberry
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🍊</span> Orange
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🍒</span> Cherry
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🫐</span> Blueberry
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🫐</span> Raspberry
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🫘</span> Soybean
+                    </div>
+<div class="bg-white text-[#1a3d2b] border border-[#52b788]/30 font-['DM_Sans'] text-[13px] font-medium py-2 px-[18px] rounded-full hover:bg-[#2d6a4f] hover:text-white transition-all duration-300 cursor-default flex items-center gap-2">
+<span>🥒</span> Squash
+                    </div>
+</div>
+</div>
+</section>
+<!-- Secondary Informational Bento Grid -->
+<section class="py-24 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Left Feature -->
+<div class="md:col-span-7 bg-surface-container-low p-12 rounded-lg flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-primary text-4xl mb-6">psychology</span>
+<h2 class="font-headline text-4xl font-bold text-primary mb-4">Neural-Network Analysis</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed max-w-md">Our algorithm is trained on over 50,000 images of diseased crops, ensuring 98% accuracy in localized conditions.</p>
+</div>
+<div class="mt-12 overflow-hidden rounded-md h-64 bg-surface-container-highest">
+<img alt="Leaf health details" class="w-full h-full object-cover" data-alt="Macro photography of a healthy green leaf with sunlight illuminating the intricate vein structure and natural texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0hLnZhlZePnvbBo4N_Ob6tulzKUwew40FR8R_Bb4aeZUxkKqs_zKw1J36lGcGJIDDXGLlXE1U7P1sKJq33-Xf75m4xpKutZEVJn8dDvpwhMyTbAEIzGPs3yQm9oNrJpjAtFeWgTf8e-INZhi7sTNgrukcvanrs-jDrInIu9Wx2UQoEuNRq6xsXBdDUDD0MDha2GD5QDrz-i6cS-MWM3q5woblBNO3cu7jH32Oq6bcGs6Dby9_HI9tG-jaKE5j6DDiydz_dSv7Zc9M"/>
+</div>
+</div>
+<!-- Right Feature Column -->
+<div class="md:col-span-5 flex flex-col gap-8">
+<div class="bg-primary text-on-primary p-10 rounded-lg flex-1">
+<h3 class="font-headline text-3xl font-bold mb-4">Real-time Advisory</h3>
+<p class="text-on-primary/80 mb-8">Receive instant treatment protocols verified by local agronomy experts.</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full border-2 border-on-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined">local_hospital</span>
+</div>
+<span class="font-bold">24/7 Support Available</span>
+</div>
+</div>
+<div class="bg-surface-container-highest p-10 rounded-lg">
+<h3 class="font-headline text-3xl font-bold text-primary mb-4">Community Impact</h3>
+<div class="text-5xl font-black text-primary mb-2">1.2M+</div>
+<p class="text-on-surface-variant font-medium">Farmers empowered across Southeast Asia.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 bg-[#f5f3ee] dark:bg-slate-900 border-t border-[#0f5238]/10 dark:border-slate-800">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+<div class="space-y-4">
+<div class="font-['Newsreader'] font-bold text-[#0f5238] dark:text-[#4ade80] text-xl">Crop Doctor</div>
+<p class="font-['Plus_Jakarta_Sans'] text-sm text-slate-600 dark:text-slate-400">
+                    © 2024 Crop Doctor. Empowering The Modern Agrarian.
+                </p>
+</div>
+<div class="flex flex-wrap gap-x-8 gap-y-4 items-center md:justify-end">
+<a class="font-['Plus_Jakarta_Sans'] text-sm text-slate-500 hover:text-[#0f5238] dark:hover:text-[#4ade80] hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm text-slate-500 hover:text-[#0f5238] dark:hover:text-[#4ade80] hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm text-slate-500 hover:text-[#0f5238] dark:hover:text-[#4ade80] hover:underline transition-all" href="#">Contact Support</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm text-slate-500 hover:text-[#0f5238] dark:hover:text-[#4ade80] hover:underline transition-all" href="#">Agricultural Partners</a>
+</div>
+</div>
+</footer>
+</body></html>

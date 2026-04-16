@@ -1,0 +1,58 @@
+# ── SECURITY — NEVER UPLOAD ──────────────────
+firebase_credentials.json
+google-services.json
+GoogleService-Info.plist
+crop_disease_app/android/key.properties
+*.keystore
+*.jks
+.env
+.env.local
+.env.*
+secrets/
+
+# ── DATA — TOO LARGE ─────────────────────────
+data/
+logs/
+results/
+
+# ── MODELS — TOO LARGE ───────────────────────
+models/backups/
+models/*.keras
+models/*.tflite
+models/disease_model_savedmodel/
+models/smart_phase_*.keras
+
+# ── REQUIRED FLUTTER ASSETS ──────────────────
+# Force Git to track the optimized mobile models required by the Flutter app
+!crop_disease_app/assets/models/*.tflite
+
+# ── FLUTTER BUILD OUTPUT ──────────────────────
+crop_disease_app/build/
+crop_disease_app/.dart_tool/
+crop_disease_app/.flutter-plugins
+crop_disease_app/.flutter-plugins-dependencies
+crop_disease_app/.packages
+crop_disease_app/.idea/
+crop_disease_app/ios/Pods/
+crop_disease_app/ios/.symlinks/
+*.apk
+*.aab
+*.ipa
+
+# ── PYTHON ────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.egg-info/
+
+# ── EDITOR ────────────────────────────────────
+.vscode/
+.idea/
+*.iml
+
+# ── OS ────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini

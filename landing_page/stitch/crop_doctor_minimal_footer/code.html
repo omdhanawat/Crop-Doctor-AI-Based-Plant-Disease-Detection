@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#f5f3ee",
+                        "on-secondary-fixed": "#002112",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "on-primary-fixed-variant": "#0e5138",
+                        "on-tertiary-fixed": "#2c1700",
+                        "inverse-surface": "#30312d",
+                        "secondary-fixed": "#c4ecd2",
+                        "surface-dim": "#dcdad4",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#c4ecd2",
+                        "inverse-primary": "#95d4b3",
+                        "tertiary-fixed-dim": "#ffb86a",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#f0eee8",
+                        "inverse-on-surface": "#f2f1eb",
+                        "primary-container": "#2d6a4f",
+                        "error": "#ba1a1a",
+                        "primary": "#0f5238",
+                        "on-background": "#1b1c19",
+                        "tertiary-container": "#895200",
+                        "surface-tint": "#2c694e",
+                        "on-secondary-fixed-variant": "#2b4e3b",
+                        "outline-variant": "#bfc9c1",
+                        "primary-fixed": "#b1f0ce",
+                        "on-tertiary-container": "#ffd1a2",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#683d00",
+                        "surface": "#fbf9f3",
+                        "surface-bright": "#fbf9f3",
+                        "outline": "#707973",
+                        "surface-variant": "#e4e2dd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#404943",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#a8e7c5",
+                        "on-primary-fixed": "#002114",
+                        "surface-container-highest": "#e4e2dd",
+                        "on-tertiary-fixed-variant": "#683d00",
+                        "secondary": "#426651",
+                        "background": "#fbf9f3",
+                        "tertiary-fixed": "#ffdcbc",
+                        "secondary-fixed-dim": "#a9d0b6",
+                        "primary-fixed-dim": "#95d4b3",
+                        "on-secondary-container": "#486c57",
+                        "surface-container-high": "#eae8e2",
+                        "on-error": "#ffffff"
+                    },
+                    fontFamily: {
+                        "headline": ["Newsreader", "serif"],
+                        "body": ["Plus Jakarta Sans", "sans-serif"],
+                        "label": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col">
+<!-- Hero/Content Spacer to push footer down -->
+<main class="flex-grow flex flex-col items-center justify-center p-12 text-center">
+<div class="max-w-4xl space-y-8">
+<h1 class="font-headline text-6xl lg:text-8xl tracking-tight text-primary">Nurturing the soil, empowering the soul.</h1>
+<p class="text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">Advanced satellite diagnostics and expert agronomy advice for the modern Indian farmer, delivered with the precision of a digital journal.</p>
+<div class="flex gap-4 justify-center">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-medium hover:opacity-90 transition-all">Get Started</button>
+<button class="bg-secondary-container text-on-secondary-container px-8 py-4 rounded-full font-medium hover:opacity-90 transition-all">Watch Demo</button>
+</div>
+</div>
+<!-- Background Imagery Asset -->
+<div class="mt-20 w-full max-w-6xl aspect-[21/9] rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Wide panoramic shot of lush green stepped rice terraces in a valley during a misty golden sunrise, cinematic and tranquil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvDYSEjrnVK5tBGBfC0YM-jUcRJeZxF7as6P-g-eU2EmFofjXI88tGZBUoNMTl40P7WwrvCWGH9ySCrmZut-Anf1RF_7ADR5CgPALNE3yX9BA1bYt6xDmbtbBRSWJZmxyNOXs2MYPVTgSB7gKAzuEi890ZH2qZlFJwEDqgA-AhoyfZ16mIUpTxLiR97BGLl4I5i3BzT0C5imjXkBMUokBMNGs23wmrTsaDZdxmW59RqOhvVuvOSQMAdYrkkvUjogEvqdTN7Ph1XN80"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+</div>
+</main>
+<!-- Footer Component -->
+<!-- Applying Shared Component logic: bg-emerald-950 mapping to the Dark Green requested -->
+<footer class="w-full bg-[#111f17] border-t border-white/[0.06]">
+<div class="px-12 py-10 max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0">
+<!-- Left Section: Identity -->
+<div class="flex items-center">
+<span class="font-headline text-[20px] font-bold text-white tracking-tight">Crop Doctor</span>
+</div>
+<!-- Center Section: Navigation -->
+<nav class="flex flex-wrap justify-center items-center gap-[28px]">
+<a class="text-[14px] text-white/40 font-body hover:text-[#52b788] transition-colors duration-300" href="#">How it works</a>
+<a class="text-[14px] text-white/40 font-body hover:text-[#52b788] transition-colors duration-300" href="#">Features</a>
+<a class="text-[14px] text-white/40 font-body hover:text-[#52b788] transition-colors duration-300" href="#">Crops</a>
+<a class="text-[14px] text-white/40 font-body hover:text-[#52b788] transition-colors duration-300" href="#">Team</a>
+<a class="text-[14px] text-white/40 font-body hover:text-[#52b788] transition-colors duration-300" href="#">Download</a>
+</nav>
+<!-- Right Section: Copyright -->
+<div class="flex items-center">
+<p class="text-[13px] text-white/25 font-body">© 2026 Crop Doctor. Made for Indian farmers.</p>
+</div>
+</div>
+</footer>
+</body></html>

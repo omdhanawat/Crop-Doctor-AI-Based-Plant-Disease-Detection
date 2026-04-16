@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Agronomist - Scan Leaf</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .scanning-line {
+            animation: scan 3s linear infinite;
+        }
+        :root {
+            --nature-green: #2dcc70;
+            --soft-cream: #fdfbf7;
+            --pastel-green: #e8f5e9;
+            --earthy-brown: #5d4037;
+            --muted-green: #4e6e5d;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                "nature-green": "#2dcc70",
+                "soft-cream": "#fdfbf7",
+                "pastel-green": "#e8f5e9",
+                "earthy-brown": "#5d4037",
+                "muted-green": "#4e6e5d",
+              },
+              fontFamily: {
+                "headline": ["Noto Serif"],
+                "body": ["Manrope"],
+                "label": ["Manrope"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-black font-body selection:bg-nature-green/30 overflow-hidden">
+<div class="fixed inset-0 z-0 bg-nature-green/20 flex items-center justify-center overflow-hidden">
+<img alt="Vibrant green foliage with dappled light" class="w-full h-full object-cover scale-110 blur-[8px] brightness-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoZ_BnbCXuoQzRbxq2_lwewCKC6qbVXn1kyWFiq9ublWvTV_PKpKcp3uV7WSHxRdrv6CqyWrVzfW8z9IEF1wxzY2TA0F0Wy0o3yI1ifN-yOmPzQa8cxgVBB371cgZ7U74Vl0yZNUAkFlnsRhB2XulaZlmdgmX9Fb0Elv6aDFrQlQT7KuwBgABQyXks9qI09jG8RMRHKx5IRX7h3-B1cyRuhNqRdhyviLm6w0VqGdvNabqewBvxSfGThPcO3T8LXvW57DuMf_HxZ8nX"/>
+<div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent"></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="relative w-[260px] h-[260px]">
+<div class="absolute top-0 left-0 w-[40px] h-[40px] border-t-[4px] border-l-[4px] border-nature-green rounded-tl-[24px]"></div>
+<div class="absolute top-0 right-0 w-[40px] h-[40px] border-t-[4px] border-r-[4px] border-nature-green rounded-tr-[24px]"></div>
+<div class="absolute bottom-0 left-0 w-[40px] h-[40px] border-b-[4px] border-l-[4px] border-nature-green rounded-bl-[24px]"></div>
+<div class="absolute bottom-0 right-0 w-[40px] h-[40px] border-b-[4px] border-r-[4px] border-nature-green rounded-br-[24px]"></div>
+<div class="scanning-line absolute left-2 right-2 h-[3px] bg-nature-green shadow-[0_0_20px_rgba(45,204,112,0.8)] z-10 rounded-full"></div>
+<div class="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap">
+<span class="text-white drop-shadow-md text-[13px] font-label font-semibold tracking-wide bg-black/20 px-3 py-1 rounded-full backdrop-blur-sm">Place leaf inside frame</span>
+</div>
+</div>
+</div>
+</div>
+<div class="relative z-10 flex flex-col h-screen">
+<header class="flex justify-between items-center px-6 pt-12 pb-6 w-full bg-transparent">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-black/10 backdrop-blur-md">
+<span class="material-symbols-outlined text-white" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline font-bold text-2xl text-white tracking-tight drop-shadow-md">Scan Leaf</h1>
+</div>
+<div class="w-10 h-10"></div>
+</header>
+<div class="px-8 mt-4 pointer-events-none">
+<div class="flex justify-between items-start opacity-90">
+<div class="bg-black/20 backdrop-blur-sm rounded-lg p-2">
+<div class="text-[9px] font-label text-nature-green uppercase font-bold tracking-[0.2em]">Optical Status</div>
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-nature-green animate-pulse"></div>
+<div class="text-[11px] font-body text-white/90">Active AI Syncing...</div>
+</div>
+</div>
+<div class="bg-black/20 backdrop-blur-sm rounded-lg p-2 text-right">
+<div class="text-[9px] font-label text-nature-green uppercase font-bold tracking-[0.2em]">Diagnostics</div>
+<div class="text-[11px] font-body text-white/90">LENS_STABILIZED_V2</div>
+</div>
+</div>
+</div>
+<div class="flex-grow"></div>
+<section class="bg-soft-cream rounded-t-[40px] h-[200px] md:h-[180px] w-full flex flex-col items-center pt-6 pb-10 px-6 shadow-[0_-15px_50px_rgba(0,0,0,0.15)]">
+<p class="text-muted-green text-[13px] font-label font-bold mb-6">Hold steady for best results</p>
+<div class="flex items-center justify-between w-full max-w-sm px-4">
+<button class="flex flex-col items-center gap-1 group">
+<div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-pastel-green text-earthy-brown group-hover:bg-nature-green/10 transition-colors">
+<span class="material-symbols-outlined text-[26px]" data-icon="image">image</span>
+</div>
+<span class="text-earthy-brown font-label text-[10px] font-bold tracking-widest uppercase">GALLERY</span>
+</button>
+<div class="relative">
+<button class="w-[84px] h-[84px] bg-white border-[4px] border-nature-green rounded-full flex items-center justify-center shadow-xl active:scale-95 transition-transform">
+<div class="w-[64px] h-[64px] rounded-full bg-pastel-green flex items-center justify-center">
+<span class="material-symbols-outlined text-nature-green text-[36px] fill-icon" data-icon="photo_camera">photo_camera</span>
+</div>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 group">
+<div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-pastel-green text-earthy-brown group-hover:bg-nature-green/10 transition-colors">
+<span class="material-symbols-outlined text-[26px]" data-icon="flash_on">flash_on</span>
+</div>
+<span class="text-earthy-brown font-label text-[10px] font-bold tracking-widest uppercase">FLASH</span>
+</button>
+</div>
+</section>
+</div>
+
+</body></html>
