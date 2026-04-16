@@ -16,7 +16,7 @@
 
 ## 🌐 Landing Page
 
-[**👉 Click here to open the live landing page**](https://omdhanawat.github.io/-Crop-Doctor-AI-Based-Plant-Disease-Detection/)
+[**👉 Click here to open the live landing page**](https://omdhanawat.github.io/Crop-Doctor-AI-Based-Plant-Disease-Detection/)
 
 The project includes a premium, responsive landing page to showcase the application, features, and supported crops. Deployment is handled via GitHub Pages pointing to the `/docs` folder.
 
@@ -127,6 +127,6 @@ python src/retrain_from_feedback.py --count-only
 
 **Built for sustainable agriculture. Factual. Fast. Free.**
 
-[🌐 Open Live Landing Page](https://omdhanawat.github.io/-Crop-Doctor-AI-Based-Plant-Disease-Detection/) • [⭐ Star this project](https://github.com/omdhanawat/-Crop-Doctor-AI-Based-Plant-Disease-Detection)
+[🌐 Open Live Landing Page](https://omdhanawat.github.io/Crop-Doctor-AI-Based-Plant-Disease-Detection/) • [⭐ Star this project](https://github.com/omdhanawat/Crop-Doctor-AI-Based-Plant-Disease-Detection)
 
 </div>
