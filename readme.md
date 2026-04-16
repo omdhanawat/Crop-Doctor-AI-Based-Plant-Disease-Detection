@@ -11,15 +11,13 @@
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Android-3DDC84?style=flat&logo=android)](https://android.com)
 
-[🌐 View Landing Page](docs/index.html) • [🚀 Quick Start](#-quick-start) • [📊 Model Performance](#-model-performance) • [🏗️ Architecture](#️-architecture)
-
 </div>
 
 ---
 
 ## 🌐 Landing Page
 
-[**👉 Click here to open the landing page**](docs/index.html)
+[**👉 Click here to open the live landing page**](https://omdhanawat.github.io/-Crop-Doctor-AI-Based-Plant-Disease-Detection/)
 
 The project includes a premium, responsive landing page to showcase the application, features, and supported crops. Deployment is handled via GitHub Pages pointing to the `/docs` folder.
 
@@ -130,6 +128,6 @@ python src/retrain_from_feedback.py --count-only
 
 **Built for sustainable agriculture. Factual. Fast. Free.**
 
-[🌐 Open Landing Page](docs/index.html) • [⭐ Star this project](https://github.com/dhananjay-sahu/Crop_Disease_Predection)
+[🌐 Open Live Landing Page](https://omdhanawat.github.io/-Crop-Doctor-AI-Based-Plant-Disease-Detection/) • [⭐ Star this project](https://github.com/omdhanawat/-Crop-Doctor-AI-Based-Plant-Disease-Detection)
 
 </div>
