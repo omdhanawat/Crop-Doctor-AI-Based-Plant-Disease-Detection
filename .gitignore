@@ -15,11 +15,16 @@ data/
 logs/
 results/
 
+# ── DESIGN ARTIFACTS — USELESS ──────────────
+stitch_assets/
+landing_page/stitch/
+
 # ── MODELS — TOO LARGE ───────────────────────
 models/backups/
 models/*.keras
 models/*.tflite
 models/disease_model_savedmodel/
+models/leaf_detector_savedmodel/
 models/smart_phase_*.keras
 
 # ── REQUIRED FLUTTER ASSETS ──────────────────
