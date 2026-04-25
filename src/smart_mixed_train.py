@@ -1,10 +1,10 @@
 """
 Smart Mixed Training — Best Model From Available Data
-======================================================
+
 Trains the best possible model using:
-  - PlantVillage (all 38 classes)
-  - Recomposed synthetic images (all 38 classes)
-  - Real-world images (23 classes)
+  - PlantVillage 
+  - Recomposed synthetic images 
+  - Real-world images 
 
 Strategy:
   - Real images weighted 3x higher than synthetic
@@ -12,14 +12,6 @@ Strategy:
   - Very low LR (1e-5) to prevent catastrophic forgetting
   - Longer training with aggressive early stopping
   - Two-phase: freeze backbone first, then unfreeze
-
-USAGE:
-  python src/smart_mixed_train.py
-
-Expected outcome:
-  PlantVillage accuracy:   88-93%
-  Real-world accuracy:     75-82%
-  No collapsed classes below 60%
 """
 
 import os
